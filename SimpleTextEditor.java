@@ -6,9 +6,7 @@ import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
-
-
-
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -21,6 +19,7 @@ import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Color;
+import javax.swing.JButton;
 
 public class SimpleTextEditor {
 	
@@ -30,10 +29,10 @@ public class SimpleTextEditor {
 	private JTextArea textArea;
 	
 	private File openfile;
-
 	/**
 	 * Launch the application.
 	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -61,6 +60,22 @@ public class SimpleTextEditor {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		        if (JOptionPane.showConfirmDialog(frame, 
+		            "Are you sure you want to close this window?", "Close Window?", 
+		            JOptionPane.YES_NO_OPTION,
+		            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+		            System.exit(0);
+		        }
+		        else 
+		        	frame.getDefaultCloseOperation();
+		        
+		    }
+		});
+		
 		frame.setBackground(Color.DARK_GRAY);
 		frame.setTitle(TITLE);
 		frame.setBounds(100, 100, 583, 478);
@@ -115,6 +130,7 @@ public class SimpleTextEditor {
 		
 		
 	}
+	
 	private void open() {
 		try {
 			
@@ -123,6 +139,10 @@ public class SimpleTextEditor {
 			chooser.showOpenDialog(null);
 			
 			openfile= chooser.getSelectedFile();
+			
+			
+			
+			
 			if(openfile!=null&&!openfile.exists()) {
 				JOptionPane.showMessageDialog(null, "Failed to open file,This file dosen't exixt!","Error",JOptionPane.ERROR_MESSAGE);
 				openfile=null;
@@ -149,9 +169,17 @@ public class SimpleTextEditor {
         	
         	JFileChooser chooser = new JFileChooser();
 			chooser.setDialogTitle("Save new file");
-			chooser.showSaveDialog(null);
+			int c =chooser.showSaveDialog(null);
+			if (c == JFileChooser.CANCEL_OPTION) {
+			    System.out.println("cancel");
+			    return;}
 			
 			openfile = chooser.getSelectedFile();
+			if(openfile==null)
+        	{
+        		JOptionPane.showMessageDialog(null, "Failed to save file, No file is Selected!","Error",JOptionPane.ERROR_MESSAGE);
+        		return;
+        	}
 			
 			save();
 			
@@ -165,13 +193,15 @@ public class SimpleTextEditor {
             try {
             	if(openfile==null)
             	{
-            		JOptionPane.showMessageDialog(null, "Failed to save file, No file is Selected!","Error",JOptionPane.ERROR_MESSAGE);
+            		create();
             		return;
             	}
+            	
             	String contents=textArea.getText();
             	
             	Formatter form=new Formatter(openfile);
     			form.format("%s", contents);
+    			
     			form.close();
     			
     			frame.setTitle(TITLE+" - "+openfile.getName());
@@ -185,7 +215,7 @@ public class SimpleTextEditor {
         private void close() {
         	if(openfile==null)
         	{
-        		JOptionPane.showMessageDialog(null, "Failed to close file, No file is Selected!","Error",JOptionPane.ERROR_MESSAGE);
+        		create();
         		return;
         	}
             try {
@@ -199,12 +229,14 @@ public class SimpleTextEditor {
    			    openfile=null;
    			    
    			 frame.setTitle(TITLE);
+   	
             	
    		}
    		catch(Exception e) {
    		e.printStackTrace();
    		}
    }
+        
 }
 
 
