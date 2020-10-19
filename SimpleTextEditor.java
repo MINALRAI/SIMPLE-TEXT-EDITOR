@@ -138,7 +138,7 @@ public class SimpleTextEditor {
 			chooser.setDialogTitle("Select a Text File to Open");
 			chooser.showOpenDialog(null);
 			
-			openfile= chooser.getSelectedFile();
+			openfile= new File(chooser.getSelectedFile()+".txt");
 			
 			
 			
@@ -174,7 +174,7 @@ public class SimpleTextEditor {
 			    System.out.println("cancel");
 			    return;}
 			
-			openfile = chooser.getSelectedFile();
+			openfile= new File(chooser.getSelectedFile()+".txt");
 			if(openfile==null)
         	{
         		JOptionPane.showMessageDialog(null, "Failed to save file, No file is Selected!","Error",JOptionPane.ERROR_MESSAGE);
