@@ -9,4 +9,4 @@ A simple text editor in java using Swing GUI
 1. This program will only work on an offline java compiler.
 2. Use the close option under the "file" menu to close the text file. The 'X' option on the window is for closing the window builder. It will not showcase the features of the close button meant for the text editor 
 ### Important instruction to run this program
-1. Install the "WindowBuilder 1.9.4" which comes with all necessary plugins needed to run this program. If the reader is using eclipse then they can simply go to the eclipse marketplace from the help menu and type in "Window Builder". It automatically takes you to this tool. Make sure you have the updated version of WindowBuilder 1.9.4.
+ Install the "WindowBuilder 1.9.4" which comes with all necessary plugins needed to run this program. If the reader is using eclipse then they can simply go to the eclipse marketplace from the help menu and type in "Window Builder". It automatically takes you to this tool. Make sure you have the updated version of WindowBuilder 1.9.4.
